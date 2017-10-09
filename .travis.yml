@@ -1,33 +1,24 @@
+os:
+  - linux
+
 language: php
 
 php:
-  - 7.1
-
+  - '7.1'
+  
 before_script:
-  - phpenv config-rm xdebug.ini
-  - cp .env.travis .env
   - composer self-update
   - composer install --no-interaction
-  - php artisan key:generate
-  - php artisan migrate
-  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
-  - npm install --global gulp-cli
+  - cp .env.travis .env
+  - pear install pear/PHP_CodeSniffer
+  - phpenv rehash
+  - nvm install 7.7.1
+  - npm install npm@latest -g
+  - npm install -g jshint
   - npm install
-  - gulp --production
-
-before_install:
-  - mysql -e 'CREATE DATABASE travis;'
   
 script:
-  - phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.xml
-  
-services:
-  - mysql
-
-cache:
-  directories:
-    - node_modules
-    - vendor
-    
-env:
-  - TRAVIS_NODE_VERSION="4"
+  - vendor/bin/phpunit --coverage-text
+  - phpcs --ignore=app/Http/Controllers/Auth,app/Http/Controllers/Controller.php app/Http/Controllers
+  - npm run production
+  - jshint resources/assets/js/modules/*
