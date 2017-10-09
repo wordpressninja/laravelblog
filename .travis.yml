@@ -4,12 +4,16 @@ os:
 language: php
 
 php:
+  - '7.0'
   - '7.1'
   
 before_script:
-  - composer self-update
-  - composer install --no-interaction
   - cp .env.travis .env
+  - composer self-update
+  - composer install --prefer-source --no-interaction --dev
+  - php artisan key:generate
+  - php artisan jwt:generate
+  - php artisan migrate
   - pear install pear/PHP_CodeSniffer
   - phpenv rehash
   - nvm install 7.7.1
@@ -17,8 +21,18 @@ before_script:
   - npm install -g jshint
   - npm install
   
+before_install:
+  - mysql -e 'CREATE DATABASE realworld_test;'
+
 script:
+  - phpunit
   - vendor/bin/phpunit --coverage-text
   - phpcs --ignore=app/Http/Controllers/Auth,app/Http/Controllers/Controller.php app/Http/Controllers
   - npm run production
   - jshint resources/assets/js/modules/*
+
+services:
+  - mysql
+
+notifications:
+  email: false
