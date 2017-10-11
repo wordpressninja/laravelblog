@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Category;
 use Illuminate\Http\Request;
 
-class PostsController extends Controller
+class CategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,6 +14,7 @@ class PostsController extends Controller
     public function index()
     {
         //
+        return view('admin.categories.index')->with('categories', Category::all());
     }
 
     /**
@@ -23,8 +24,8 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //return view
-        return view('admin.posts.create');
+        //
+        return view('admin.categories.create');
     }
 
     /**
@@ -35,14 +36,16 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //store post into fbsql_database
-       
-        $this->validate($request,[
-            'title' => 'required',
-            'content' => 'required',
-            'featured' => 'required|image'
+        //Validate
+        $this->validate($request, [
+            'categoryName' => 'required'
         ]);
-        dd($request->all());
+      //  dd($request->all());
+        $category = new Category;
+        $category->name = $request->categoryName;
+        $category->save();
+
+        return redirect()->back();
     }
 
     /**
