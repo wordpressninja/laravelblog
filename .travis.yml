@@ -20,7 +20,7 @@ before_script:
   - npm install
   
 before_install:
-  - mysql -e 'CREATE DATABASE realworld_test;'
+  - mysql -e 'CREATE DATABASE laravelblog;'
 
 script:
   - phpunit
