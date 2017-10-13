@@ -1,13 +1,5 @@
 <?php
-/*
-|--------------------------------------------------------------------------
-| CategoriesController
-|--------------------------------------------------------------------------
-|
-| Handles the route get/post request for the CRUD of application categoreis.
-| Now create something great!
-|
-*/
+
 namespace App\Http\Controllers;
 use App\Category;
 use Session;
@@ -32,7 +24,6 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-    
         return view('admin.categories.create');
     }
 
