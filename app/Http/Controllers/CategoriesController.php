@@ -1,7 +1,16 @@
 <?php
-
+/*
+|--------------------------------------------------------------------------
+| CategoriesController
+|--------------------------------------------------------------------------
+|
+| Handles the route get/post request for the CRUD of application categoreis.
+| Now create something great!
+|
+*/
 namespace App\Http\Controllers;
 use App\Category;
+use Session;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -13,7 +22,6 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        //
         return view('admin.categories.index')->with('categories', Category::all());
     }
 
@@ -24,52 +32,45 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        //
+    
         return view('admin.categories.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //Validate
-        $this->validate($request, [
-            'categoryName' => 'required'
-        ]);
-      //  dd($request->all());
+        $this->validate($request, [ 'categoryName' => 'required' ]);
         $category = new Category;
         $category->name = $request->categoryName;
         $category->save();
-
+        Session::flash('success', 'You successfully created a category.');
         return redirect()->route('categories');
-
-        return redirect()->back();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+       //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
         $category = Category::find($id);
         return view('admin.categories.edit')->with('category', $category);
     }
@@ -77,32 +78,30 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request  $request
+     * @param int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
         $category = Category::find($id);
         $category->name = $request->categoryName;
         $category->save();
-
+        Session::flash('success', 'You successfully updated a category.');
         return redirect()->route('categories');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
         $category = Category::find($id);
         $category->delete();
-
+        Session::flash('success', 'You successfully deleted a category.');
         return redirect()->route('categories');
     }
 }

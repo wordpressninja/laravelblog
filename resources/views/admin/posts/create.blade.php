@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('content')
   @include('admin.includes.errors')
 	 <div class="panel panel-default">
                 <div class="panel-heading">Create New Post</div>
@@ -21,7 +21,15 @@
                   		<fieldset class="form-group">
                   			<label for="content">Content</label>
                   			<textarea class="form-control" id="content" cols="10" rows="10" placeholder="Post Text Area" name="content"></textarea>
-                  		</fieldset>                  		
+                  		</fieldset>
+                      <fieldset class="form-group">
+                        <label for="category_id">Select Category</label>
+                        <select class="form-control" id="category_id" placeholder="Post Text Area" name="category_id">
+                          @foreach($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                          @endforeach
+                        </select>
+                      </fieldset>                                        		
                   		<fieldset class="form-group">
                   			<label for="featured">Featured Image</label>
                   			<input type="file" class="form-control" id="featured" name="featured">
