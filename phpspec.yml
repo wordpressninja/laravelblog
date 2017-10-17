@@ -1,0 +1,6 @@
+suites:
+  model_suite:
+    namespace: Controllers
+    src_path: app
+    spec_path: app
+    spec_prefix: spec
