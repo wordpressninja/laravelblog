@@ -57,10 +57,11 @@ class PostsController extends Controller
             'title' => $request->title,
             'content' => $request->content,
             'featured' => 'uploads/post'. $featured_new_name,
-            'category_id' => $request->category_id
+            'category_id' => $request->category_id,
+            'slug' => str_slug($request->title)
         ]);
         Session::flash('success', 'Post created successfully.');
-        dd($request->all());
+       return redirect()->back();
     }
 
     /**
