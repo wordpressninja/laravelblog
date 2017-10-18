@@ -84,7 +84,7 @@ class PostsController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-        return view(admin.posts.edit)->with('post', $post);
+        return view('admin.posts.edit')->with('post', $post);
     }
 
     /**
@@ -121,5 +121,31 @@ class PostsController extends Controller
         Session::flash('success', 'The post has been moved to the trash.');
 
         return redirect()->back();
+    }
+
+    public function trashed()
+    {
+        $posts = Post::onlyTrashed()->get();
+        return view('admin.posts.trashed')->with('posts', $posts);
+    }
+
+    public function kill($id)
+    {
+        $post = Post::withTrashed()->where('id', $id)->first();
+
+        $post->forceDelete();
+
+        Session::flash('success', 'Post deleted from database.');
+        return redirect()->back();
+    }
+
+    public function restore($id)
+    {
+        $post = Post::withTrashed()->where('id', $id)->first();
+        $post->restore();
+
+        Session::flash('success', 'Your post has been restored!');
+
+        return redirect()->route('posts');
     }
 }
