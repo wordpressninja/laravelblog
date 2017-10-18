@@ -13,13 +13,24 @@ class Post extends Model
      * @var array
      */
     use SoftDeletes;
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
+    
     protected $fillable = [
         'title', 'content', 'category_id', 'featured', 'slug'
     ];
-    protected $dates =['deleted_at'];
+    public function getFeaturedAttribute($featured)
+    {
+        return asset($featured);
+    }
+
     //Category Relationship
     public function category()
     {
-    	return $this->belongsTo('App\Category');
+        return $this->belongsTo('App\Category');
     }
 }

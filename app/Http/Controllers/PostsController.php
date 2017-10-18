@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Session;
 use App\Post;
 use App\Category;
@@ -15,7 +16,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.posts.index')->with('posts', Post::all());
     }
 
     /**
@@ -26,12 +27,11 @@ class PostsController extends Controller
     public function create()
     {
         $categories = Category::all();
-        if($categories->count() == 0)
-        {
+        if ($categories->count() == 0) {
             Session::flash('info', 'You must have some categories before attempting to create a post.');
             return redirect()->back();
         }
-        return view('admin.posts.create')->with( 'categories', $categories );
+        return view('admin.posts.create')->with('categories', $categories);
     }
 
     /**
@@ -44,7 +44,7 @@ class PostsController extends Controller
     {
         //store post into fbsql_database
        
-        $this->validate($request,[
+        $this->validate($request, [
             'title' => 'required',
             'content' => 'required',
             'featured' => 'required|image',
@@ -52,16 +52,16 @@ class PostsController extends Controller
         ]);
         $featured = $request->featured;
         $featured_new_name = time().$featured->getClientOriginalName();
-        $featured->move('uploads/posts', $featured_new_name);
+        $featured->move('uploads/posts/', $featured_new_name);
         $post = Post::create([
             'title' => $request->title,
             'content' => $request->content,
-            'featured' => 'uploads/post'. $featured_new_name,
+            'featured' => 'uploads/posts/'. $featured_new_name,
             'category_id' => $request->category_id,
             'slug' => str_slug($request->title)
         ]);
         Session::flash('success', 'Post created successfully.');
-       return redirect()->back();
+        return redirect()->back();
     }
 
     /**
@@ -83,7 +83,8 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        return view(admin.posts.edit)->with('post', $post);
     }
 
     /**
@@ -95,7 +96,14 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::find($id);
+        $post->title = $request->postTitle;
+        $post->content =$request->postContent;
+        $post->image = $request->postImage;
+        $post->category = $request->postCategory;
+
+        Session::flash('success', 'You have successfully updated your post');
+        return redirect()->route('posts');
     }
 
     /**
@@ -106,6 +114,12 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+
+        $post->delete();
+
+        Session::flash('success', 'The post has been moved to the trash.');
+
+        return redirect()->back();
     }
 }
