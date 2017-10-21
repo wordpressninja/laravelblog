@@ -2,6 +2,9 @@
 
 @section('content')
 	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2>Categories</h2>
+		</div>	
 		<div class="panel-body">
 			<table class="table table-responsive table-inverse">
 				<thead>
@@ -18,6 +21,7 @@
 					</tr>
 				</thead>
 				<tbody>
+				@if($categories->count() > 0)	
 					@foreach($categories as $category)
 					<tr>
 						<td>
@@ -35,6 +39,13 @@
 						</td>
 					</tr>
 					@endforeach
+				@else
+					<tr>
+						<th colspan="5" class="text-center">
+							There are not categories, please create some.
+						</th>
+					</tr>
+				@endif		
 				</tbody>
 			</table>
 		</div>

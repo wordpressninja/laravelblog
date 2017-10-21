@@ -84,7 +84,7 @@ class PostsController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-        return view('admin.posts.edit')->with('post', $post);
+        return view('admin.posts.edit')->with('post', $post)->with('categories', Category::all());
     }
 
     /**
@@ -96,11 +96,27 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
+        $this->validate($request, [
+            'postTitle' => 'required',
+            'postContent' => 'required',
+            'postCategory' => 'required'
+
+        ]);
+
         $post = Post::find($id);
+
+        if ($request->hasFile('postImage')) {
+            $featured = $request->postImage;
+            $featured_new_name = time() . $featured->getClientOriginalName();
+            $featured->move('/uploads/posts/', $featured_new_name);
+            $post->featured = '/uploads/posts/' . $featured_new_name;
+        }
+        
         $post->title = $request->postTitle;
         $post->content =$request->postContent;
-        $post->image = $request->postImage;
-        $post->category = $request->postCategory;
+        $post->category_id = $request->postCategory;
+        $post->save();
 
         Session::flash('success', 'You have successfully updated your post');
         return redirect()->route('posts');

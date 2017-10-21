@@ -59,6 +59,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         'as' => 'post.store'
     ]);
 
+    Route::post('/post/update/{id}', [
+        'uses' => 'PostsController@update',
+        'as' => 'post.update'
+    ]);
+
     Route::get('/posts', [
         'uses' => 'PostsController@index',
         'as' => 'posts'
