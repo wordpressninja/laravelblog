@@ -3,14 +3,14 @@
 @section('content')
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h2>Categories</h2>
+			<h2>Tags</h2>
 		</div>	
 		<div class="panel-body">
 			<table class="table table-responsive table-inverse">
 				<thead>
 					<tr>
 						<th>
-							Category Name
+							Tag Name
 						</th>
 						<th>
 							Edit
@@ -21,19 +21,19 @@
 					</tr>
 				</thead>
 				<tbody>
-				@if($categories->count() > 0)	
-					@foreach($categories as $category)
+				@if($tags->count() > 0)	
+					@foreach($tags as $tag)
 					<tr>
 						<td>
-							{{ $category->name }}
+							{{ $tag->tag }}
 						</td>
 						<td>
-							<a href="{{ route('category.edit',[ 'id' => $category->id ]) }}" class="btn btn-sm btn-info">
+							<a href="{{ route('tag.edit',[ 'id' => $tag->id ]) }}" class="btn btn-sm btn-info">
 								Edit
 							</a>
 						</td>
 						<td>
-							<a href="{{ route('category.delete',[ 'id' => $category->id ]) }}" class="btn btn-sm btn-danger">
+							<a href="{{ route('tag.delete',[ 'id' => $tag->id ]) }}" class="btn btn-sm btn-danger">
 								Delete
 							</a>
 						</td>
@@ -42,17 +42,12 @@
 				@else
 					<tr>
 						<th colspan="5" class="text-center">
-							There are not categories, please create some.
+							There are not tags, please create some.
 						</th>
 					</tr>
-				@endif	
+				@endif		
 				</tbody>
 			</table>
-		</div>
-		<div class="panel-heading">
-			<a href="{{ route('category.create') }}" class="btn btn-sm btn-info">
-			Create New Category
-			</a>
 		</div>
 	</div>
 @stop

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Session;
 use App\Post;
 use App\Category;
+use App\Tag;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -31,7 +32,9 @@ class PostsController extends Controller
             Session::flash('info', 'You must have some categories before attempting to create a post.');
             return redirect()->back();
         }
-        return view('admin.posts.create')->with('categories', $categories);
+        return view('admin.posts.create')->with('categories', $categories)
+                                         ->with('tags', Tag::all());
+
     }
 
     /**
@@ -43,12 +46,13 @@ class PostsController extends Controller
     public function store(Request $request)
     {
         //store post into fbsql_database
-       
+        //dd($request->all());
         $this->validate($request, [
             'title' => 'required',
             'content' => 'required',
             'featured' => 'required|image',
-            'category_id' => 'required'
+            'category_id' => 'required',
+            'tags' => 'required'
         ]);
         $featured = $request->featured;
         $featured_new_name = time().$featured->getClientOriginalName();
@@ -58,8 +62,10 @@ class PostsController extends Controller
             'content' => $request->content,
             'featured' => 'uploads/posts/'. $featured_new_name,
             'category_id' => $request->category_id,
+            'tag_id' => $request->tags,
             'slug' => str_slug($request->title)
         ]);
+        $post->tags()->attach($request->tags);
         Session::flash('success', 'Post created successfully.');
         return redirect()->back();
     }

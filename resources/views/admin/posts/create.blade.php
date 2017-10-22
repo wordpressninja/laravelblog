@@ -29,7 +29,22 @@
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                           @endforeach
                         </select>
-                      </fieldset>                                        		
+                      </fieldset>
+                      <fieldset class="form-group">
+                        <label for="tags">
+                          Select Tags
+                        </label>
+                         @foreach($tags as $tag)
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input class="form-check-input" type="checkbox" value="{{ $tag->id }}" name="tags[]">
+                                {{ $tag->tag }}
+                            </label>  
+                          </div>
+                          @endforeach
+                        
+                      </fieldset>
+
                   		<fieldset class="form-group">
                   			<label for="featured">Featured Image</label>
                   			<input type="file" class="form-control" id="featured" name="featured">
