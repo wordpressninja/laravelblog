@@ -48,8 +48,8 @@ class PostsController extends Controller
         //store post into fbsql_database
         //dd($request->all());
         $this->validate($request, [
-            'title' => 'required',
-            'content' => 'required',
+            'postTitle' => 'required',
+            'postContent' => 'required',
             'featured' => 'required|image',
             'category_id' => 'required',
             'tags' => 'required'
@@ -58,12 +58,12 @@ class PostsController extends Controller
         $featured_new_name = time().$featured->getClientOriginalName();
         $featured->move('uploads/posts/', $featured_new_name);
         $post = Post::create([
-            'title' => $request->title,
-            'content' => $request->content,
+            'title' => $request->postTitle,
+            'content' => $request->postContent,
             'featured' => 'uploads/posts/'. $featured_new_name,
             'category_id' => $request->category_id,
             'tag_id' => $request->tags,
-            'slug' => str_slug($request->title)
+            'slug' => str_slug($request->postTitle)
         ]);
         $post->tags()->attach($request->tags);
         Session::flash('success', 'Post created successfully.');
@@ -90,7 +90,8 @@ class PostsController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-        return view('admin.posts.edit')->with('post', $post)->with('categories', Category::all());
+        return view('admin.posts.edit')->with('post', $post)->with('categories', Category::all())
+                                                            ->with('tags', Tag::all());
     }
 
     /**
@@ -106,23 +107,24 @@ class PostsController extends Controller
         $this->validate($request, [
             'postTitle' => 'required',
             'postContent' => 'required',
-            'postCategory' => 'required'
+            'category_id' => 'required'
 
         ]);
 
         $post = Post::find($id);
 
-        if ($request->hasFile('postImage')) {
-            $featured = $request->postImage;
+        if ($request->hasFile('featured')) {
+            $featured = $request->featured;
             $featured_new_name = time() . $featured->getClientOriginalName();
-            $featured->move('/uploads/posts/', $featured_new_name);
-            $post->featured = '/uploads/posts/' . $featured_new_name;
+            $featured->move('uploads/posts/', $featured_new_name);
+            $post->featured = 'uploads/posts/' . $featured_new_name;
         }
         
         $post->title = $request->postTitle;
-        $post->content =$request->postContent;
-        $post->category_id = $request->postCategory;
+        $post->content = $request->postContent;
+        $post->category_id = $request->category_id;
         $post->save();
+        $post->tags()->sync($request->tags);
 
         Session::flash('success', 'You have successfully updated your post');
         return redirect()->route('posts');

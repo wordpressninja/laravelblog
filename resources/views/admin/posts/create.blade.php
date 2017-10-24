@@ -15,12 +15,12 @@
                   	{{ csrf_field() }}
              
                   		<fieldset class="form-group">
-                  			<label for="title">Title</label>
-                  			<input type="text" class="form-control" id="title" placeholder="Post Title" name="title">
+                  			<label for="postTitle">Title</label>
+                  			<input type="text" class="form-control" id="postTitle" placeholder="Post Title" name="postTitle">
                   		</fieldset>
                   		<fieldset class="form-group">
-                  			<label for="content">Content</label>
-                  			<textarea class="form-control" id="content" cols="10" rows="10" placeholder="Post Text Area" name="content"></textarea>
+                  			<label for="postContent">Content</label>
+                  			<textarea class="form-control" id="postContent" cols="5" rows="5" placeholder="Post Text Area" name="postContent"></textarea>
                   		</fieldset>
                       <fieldset class="form-group">
                         <label for="category_id">Select Category</label>

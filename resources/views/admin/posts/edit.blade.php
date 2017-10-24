@@ -22,20 +22,43 @@
 
                       <fieldset class="form-group">
                         <label for="postContent">Post Content</label>
-                        <textarea name="postContent" class="form-control" id="postContent" cols="10" rows="10"  value="{{ $post->content }}"></textarea>
+                        <textarea name="postContent" class="form-control" id="postContent" cols="5" rows="5" value="{{ $post->content }}">{{ $post->content }}</textarea>
                       </fieldset>
                       <fieldset class="form-group">
-                        <label for="postImage">Featured Image</label>
-                        <input type="file" class="form-control" id="postImage" name="postImage">
+                        <label for="featured">Featured Image</label>
+                        <input type="file" class="form-control" id="featured" name="featured">
                       </fieldset>
 
                       <fieldset class="form-group">
-                        <label for="postCategory">Select Category</label>
-                        <select class="form-control" id="postCategory" placeholder=" " name="postCategory">
+                        <label for="category_id">Select Category</label>
+                        <select class="form-control" id="category_id" placeholder=" " name="category_id">
                           @foreach($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            <option value="{{ $category->id }}"
+                              @if($post->category_id == $category->id)
+                              selected 
+                              @endif
+                            >{{ $category->name }}</option>
                           @endforeach
                         </select>
+                      </fieldset>
+                      <fieldset class="form-group">
+                        <label for="tags">
+                          Select Tags
+                        </label>
+                         @foreach($tags as $tag)
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input class="form-check-input" type="checkbox" value="{{ $tag->id }}" name="tags[]"
+                                @foreach($post->tags as $t)
+                                  @if($tag->id == $t->id)
+                                    checked 
+                                  @endif
+                                @endforeach
+                              >
+                                {{ $tag->tag }}
+                            </label>  
+                          </div>
+                          @endforeach
                       </fieldset>
 
                    		<fieldset class="form-group">
