@@ -11,10 +11,18 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        App\User::create([
+        $user = App\User::create([
         	'name' => 'Christopher Foster',
         	'email' => 'chris@fuzebyte.com',
-        	'password' => bcrypt('password')
+        	'password' => bcrypt('password'),
+            'admin' => 1
+        ]);
+        App\Profile::create([
+            'user_id' => $user->id,
+            'avatar' => 'uploads/avatars/1.JPG',
+            'about' => 'My name is Chris, and I am an accomplished and highly skilled web developer driven by satisfied clients. And I have been privileged to have many as CEO of FuzeByte LLC.',
+            'facebook' => 'facebook.com',
+            'youtube' => 'youtube.com'
         ]);
     }
 }
