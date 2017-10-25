@@ -46,7 +46,8 @@ class UsersController extends Controller
             'password' => bcrypt('password')
         ]);
         $profile = Profile::create([
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'avatar' => 'uploads/avatars/1.JPG'
         ]);
 
         Session::flash('success', 'New User Created');
@@ -98,4 +99,26 @@ class UsersController extends Controller
     {
         //
     }
+    
+    public function admin($id) 
+    {
+
+        $user = User::find($id);
+        $user->admin = 1;
+        $user->save();
+
+        Session::flash('success', 'User Permission has been changed to admin.');
+        return redirect()->back();
+    }
+
+    public function not_admin($id)
+    {
+        $user = User::find($id);
+        $user->admin = 0;
+        $user->save();
+        
+        Session::flash('success', 'User permission has changed to subscriber.');
+        return redirect()->back();
+    }
+
 }
