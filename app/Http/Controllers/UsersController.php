@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 class UsersController extends Controller
 {
     /**
+     * Restricts methods within this controller to admins.
+     */
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -97,7 +104,12 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->profile->delete();
+        $user->delete();
+
+        Session::flash('success', ' The user has been deleted');
+        return redirect()->back();
     }
     
     public function admin($id) 
