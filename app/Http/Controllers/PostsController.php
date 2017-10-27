@@ -17,8 +17,9 @@ class PostsController extends Controller
      */
     public function index()
     {
+        $posts = Post::all();
         $categories = Category::all();
-        return view('admin.posts.index')->with('posts', Post::all())->with('categories', Category::all());
+        return view('admin.posts.index')->with('posts', $posts)->with('categories', $categories);
     }
 
     /**

@@ -20,7 +20,8 @@
                   		</fieldset>
                   		<fieldset class="form-group">
                   			<label for="postContent">Content</label>
-                  			<textarea class="form-control" id="postContent" cols="5" rows="5" placeholder="Post Text Area" name="postContent"></textarea>
+
+                  			<textarea class="form-control" id="summernote" cols="5" rows="5" placeholder="Post Text Area" name="postContent"></textarea>
                   		</fieldset>
                       <fieldset class="form-group">
                         <label for="category_id">Select Category</label>
@@ -57,4 +58,19 @@
                   </form>
                 </div>
     </div>
+@stop
+
+@section('styles')
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+@stop
+
+@section('scripts')
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+   <script>
+      $('#summernote').summernote({
+        placeholder: 'This is your canvas, where all dreams start',
+        tabsize: 2,
+        height: 100
+      });
+    </script>
 @stop
