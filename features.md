@@ -6,3 +6,7 @@ TO DO
 - Edit Post
 - Edit Category
 - View Post
+- Add WSYWIG
+- Add User Auth and Admin Priveledges
+- Add User Profile
+
