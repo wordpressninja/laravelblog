@@ -16,6 +16,9 @@
 							Title
 						</th>
 						<th>
+							Category
+						</th>
+						<th>
 							Edit
 						</th>
 						<th>
@@ -32,7 +35,15 @@
 						</td>
 						<td>
 							{{ $post->title }}
-						</td>						
+						</td>
+						<td>
+						@foreach($categories as $category)
+							@if($post->category_id == $category->id)
+                              {{ $category->name }} 
+                            @endif
+                            
+                         @endforeach
+						</td>
 						<td>
 							<a href="{{ route('post.edit',[ 'id' => $post->id ]) }}" class="btn btn-sm btn-info">
 								Edit
