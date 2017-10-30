@@ -20,8 +20,8 @@
                   			<input type="text" class="form-control" id="siteName" placeholder="Site Name" name="siteName" value=" {{ $settings->site_name }}">
                       	</fieldset>
                       	<fieldset class="form-group">
-                        	<label for="siteEmail">Admin Email</label>
-                        	<input type="email" class="form-control" id="siteEmail" placeholder="Site Admin Email" name="siteEmail" value="{{ $settings->contact_email }}">
+                        	<label for="contactEmail">Admin Email</label>
+                        	<input type="email" class="form-control" id="contactEmail" placeholder="Site Admin Email" name="contactEmail" value="{{ $settings->contact_email }}">
                       	</fieldset>
                       	<fieldset class="form-group">
                   			<label for="contactAddress">Site Address</label>
