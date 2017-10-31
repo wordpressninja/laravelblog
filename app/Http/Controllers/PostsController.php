@@ -116,11 +116,13 @@ class PostsController extends Controller
 
         $post = Post::find($id);
 
-        if ($request->hasFile('featured')) {
+        if($request->hasFile('featured')) 
+        {
             $featured = $request->featured;
             $featured_new_name = time() . $featured->getClientOriginalName();
             $featured->move('uploads/posts/', $featured_new_name);
             $post->featured = 'uploads/posts/' . $featured_new_name;
+            $post->save();
         }
         
         $post->title = $request->postTitle;
