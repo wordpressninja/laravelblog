@@ -85,7 +85,7 @@
 
                                         <span class="category">
                                             <i class="seoicon-tags"></i>
-                                            <a href="#">{{ $first_post->category->name }}</a>
+                                            <a href="{{ route('category.single', ['id' => $first_post->category->id ]) }} ">{{ $first_post->category->name }}</a>
                                         </span>
 
                                         <span class="post__comments">
@@ -123,7 +123,7 @@
                             <div class="post__content-info">
 
                                     <h2 class="post__title entry-title ">
-                                        <a href="15_blog_details.html">{{ $second_post->title }}</a>
+                                        <a href="{{ route('post.single', ['slug' => $second_post->slug ]) }}">{{ $second_post->title }}</a>
                                     </h2>
 
                                     <div class="post-additional-info">
@@ -140,7 +140,7 @@
 
                                         <span class="category">
                                             <i class="seoicon-tags"></i>
-                                            <a href="#">{{ $second_post->category->name}}</a>
+                                            <a href="{{ route('category.single', ['id' => $second_post->category->id ]) }}">{{ $second_post->category->name}}</a>
                                         </span>
 
                                         <span class="post__comments">
