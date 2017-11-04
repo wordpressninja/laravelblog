@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Session;
 use App\Post;
 use App\Category;
@@ -66,8 +67,10 @@ class PostsController extends Controller
             'featured' => 'uploads/posts/'. $featured_new_name,
             'category_id' => $request->category_id,
             'tag_id' => $request->tags,
-            'slug' => str_slug($request->postTitle)
+            'slug' => str_slug($request->postTitle),
+            'user_id' => Auth::id()
         ]);
+
         $post->tags()->attach($request->tags);
         Session::flash('success', 'Post created successfully.');
         return redirect()->back();
@@ -128,6 +131,7 @@ class PostsController extends Controller
         $post->title = $request->postTitle;
         $post->content = $request->postContent;
         $post->category_id = $request->category_id;
+        $post->user_id = Auth::id();
         $post->save();
         $post->tags()->sync($request->tags);
 

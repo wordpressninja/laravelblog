@@ -21,7 +21,7 @@ class Post extends Model
     protected $dates = ['deleted_at'];
     
     protected $fillable = [
-        'title', 'content', 'category_id', 'featured', 'slug'
+        'title', 'content', 'category_id', 'featured', 'slug', 'user_id'
     ];
     public function getFeaturedAttribute($featured)
     {
@@ -37,5 +37,10 @@ class Post extends Model
     public function tags()
     {
         return $this->belongsToMany('App\Tag');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
     }
 }
