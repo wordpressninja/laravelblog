@@ -114,7 +114,7 @@
         @endif
         @if(Session::has('info'))
             toastr.info("{{ Session::get('info') }}")
-        @endif        
+        @endif   
     </script>
 
     @yield('scripts')

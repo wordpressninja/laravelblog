@@ -58,27 +58,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="socials">Share:
-                        <a href="#" class="social__item">
-                            <i class="seoicon-social-facebook"></i>
-                        </a>
-                        <a href="#" class="social__item">
-                            <i class="seoicon-social-twitter"></i>
-                        </a>
-                        <a href="#" class="social__item">
-                            <i class="seoicon-social-linkedin"></i>
-                        </a>
-                        <a href="#" class="social__item">
-                            <i class="seoicon-social-google-plus"></i>
-                        </a>
-                        <a href="#" class="social__item">
-                            <i class="seoicon-social-pinterest"></i>
-                        </a>
+                    <div class="socials text-center">
+                       <!-- Go to www.addthis.com/dashboard to customize your tools --> 
+                       <div class="addthis_inline_share_toolbox"></div>
                     </div>
                 </article>
                 <div class="blog-details-author">
                     <div class="blog-details-author-thumb">
-                        <img src=" {{asset( $post->user->profile->avatar )}}" alt="Author">
+                        <img src=" {{asset( $post->user->profile->avatar )}}" width="100px" height="100px" alt="Author">
                     </div>
                     <div class="blog-details-author-content">
                         <div class="author-info">
